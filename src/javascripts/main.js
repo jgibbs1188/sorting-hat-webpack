@@ -1,7 +1,6 @@
 import '../styles/main.scss';
 
-const studentsArray = [];
-const voldermortsArmy = [];
+
 const houseColors = {
   gryffindor: '#7F0909',
   slytherin: '#0D6217',
@@ -12,17 +11,6 @@ const houseColors = {
 const renderToDOM = (divId, content) => {
   const selectedDiv = document.querySelector(divId);
   selectedDiv.innerHTML = content;
-};
-
-const sortStudentsByHouse = (array) => {
-  array.sort((a, b) => (a.house > b.house ? 1 : -1));
-  return array;
-};
-
-const sortingHat = () => {
-  const houses = ['gryffindor', 'slytherin', 'hufflepuff', 'ravenclaw'];
-  const randomHouse = houses[Math.floor(Math.random() * houses.length)];
-  return randomHouse;
 };
 
 const cardCreator = (divId, array) => {
@@ -52,43 +40,6 @@ const cardCreator = (divId, array) => {
   });
 
   renderToDOM(divId, card);
-};
-
-const errorMessage = (student) => {
-  if (student) {
-    document.querySelector('#error-message').innerHTML = '';
-  } else {
-    document.querySelector('#error-message').innerHTML = `
-      <div style="color: red;margin-bottom: 10px;">
-        <b>Please type a name</b>
-      </div>`;
-  }
-};
-
-const expelStudent = (e) => {
-  if (e.target.type === 'button') {
-    voldermortsArmy.push(studentsArray[e.target.id]);
-    studentsArray.splice(e.target.id, 1);
-    cardCreator('#first-years-card-display', studentsArray);
-    cardCreator('#voldermorts-army', voldermortsArmy);
-  }
-};
-
-const addStudentToArray = (e) => {
-  if (e.target.id === 'sort' || e.keyCode === 13) {
-    const student = document.querySelector('#student-name');
-    errorMessage(student.value);
-
-    if (student.value) {
-      studentsArray.push({
-        name: student.value,
-        house: sortingHat(),
-      });
-      student.value = '';
-    }
-    const sortStudents = sortStudentsByHouse(studentsArray);
-    cardCreator('#first-years-card-display', sortStudents);
-  }
 };
 
 const showForm = () => {
